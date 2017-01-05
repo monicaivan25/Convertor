@@ -1,0 +1,768 @@
+#include <iostream>
+#include <string>
+
+using namespace std;
+
+short raspuns;
+
+struct
+{
+    int unitMasura;
+    double valoareInitiala, valoareFinala;
+    short unitInitial, unitFinal;
+    char expresie[256];
+}input;
+
+
+double transformareInMetrii()
+{
+    double valoareMetrii=0;
+    if (input.unitInitial == 8)
+        valoareMetrii = input.valoareInitiala * 0.0254;
+    if (input.unitInitial == 9)
+        valoareMetrii = input.valoareInitiala * 0.3048;
+    if (input.unitInitial == 10)
+        valoareMetrii = input.valoareInitiala * 0.9144002494;
+    if (input.unitInitial < 8)
+    {
+        short exponent = abs (input.unitInitial - 4);
+        unsigned long diferenta=1;
+        for (int i=0; i<exponent; i++)
+            diferenta *= 10;
+        if (input.unitInitial > 4)
+            valoareMetrii = input.valoareInitiala * diferenta;
+        else
+            valoareMetrii = input.valoareInitiala / diferenta;
+    }
+    return valoareMetrii;
+}
+void transformareDinMetrii( double valoareMetrii )
+{
+    if (input.unitFinal == 8)
+        input.valoareFinala = valoareMetrii / 0.0254;
+    if (input.unitFinal == 9)
+        input.valoareFinala = valoareMetrii / 0.3048;
+    if (input.unitFinal == 10)
+        input.valoareFinala = valoareMetrii / 0.9144002494;
+    if (input.unitFinal < 8)
+    {
+        short exponent = abs (input.unitFinal - 4);
+        unsigned long diferenta=1;
+        for (int i=0; i<exponent; i++)
+            diferenta *= 10;
+        if (input.unitFinal > 4)
+            input.valoareFinala = valoareMetrii / diferenta;
+        else
+            input.valoareFinala = valoareMetrii * diferenta;
+    }
+}
+double transformareInMetrii2()
+{
+    double valoareMetrii2=0;
+    if (input.unitInitial == 8)
+        valoareMetrii2 = input.valoareInitiala * 0.0006452;
+    if (input.unitInitial == 9)
+        valoareMetrii2 = input.valoareInitiala * 0.0929;
+    if (input.unitInitial == 10)
+        valoareMetrii2 = input.valoareInitiala * 0.836127816;
+    if (input.unitInitial < 8)
+    {
+        short exponent = abs (input.unitInitial - 4);
+        unsigned long diferenta=1;
+        for (int i=0; i<exponent; i++)
+            diferenta *= 100;
+        if (input.unitInitial > 4)
+            valoareMetrii2 = input.valoareInitiala * diferenta;
+        else
+            valoareMetrii2 = input.valoareInitiala / diferenta;
+    }
+    return valoareMetrii2;
+
+}
+void transformareDinMetrii2( double valoareMetrii2 )
+{
+    if (input.unitFinal == 8)
+        input.valoareFinala = valoareMetrii2 / 0.0006452;
+    if (input.unitFinal == 9)
+        input.valoareFinala = valoareMetrii2 / 0.0929;
+    if (input.unitFinal == 10)
+        input.valoareFinala = valoareMetrii2 / 0.836127816;
+    if (input.unitFinal < 8)
+    {
+        short exponent = abs (input.unitFinal - 4);
+        unsigned long diferenta=1;
+        for (int i=0; i<exponent; i++)
+            diferenta *= 100;
+        if (input.unitFinal > 4)
+            input.valoareFinala = valoareMetrii2 / diferenta;
+        else
+            input.valoareFinala = valoareMetrii2 * diferenta;
+    }
+}
+double transformareInMetrii3()
+{
+    double valoareMetrii3=0;
+    if (input.unitInitial == 8)
+        valoareMetrii3 = input.valoareInitiala * 0.000016387064;
+    if (input.unitInitial == 9)
+        valoareMetrii3 = input.valoareInitiala * 0.02832;
+    if (input.unitInitial == 10)
+        valoareMetrii3 = input.valoareInitiala * 0.76456;
+    if (input.unitInitial < 8)
+    {
+        short exponent = abs (input.unitInitial - 4);
+        unsigned long diferenta=1;
+        for (int i=0; i<exponent; i++)
+            diferenta *= 1000;
+        if (input.unitInitial > 4)
+            valoareMetrii3 = input.valoareInitiala * diferenta;
+        else
+            valoareMetrii3 = input.valoareInitiala / diferenta;
+    }
+    return valoareMetrii3;
+    
+}
+void transformareDinMetrii3( double valoareMetrii3 )
+{
+    if (input.unitFinal == 8)
+        input.valoareFinala = valoareMetrii3 / 0.000016387064;
+    if (input.unitFinal == 9)
+        input.valoareFinala = valoareMetrii3 / 0.02832;
+    if (input.unitFinal == 10)
+        input.valoareFinala = valoareMetrii3 / 0.76456;
+    if (input.unitFinal < 8)
+    {
+        short exponent = abs (input.unitFinal - 4);
+        unsigned long diferenta=1;
+        for (int i=0; i<exponent; i++)
+            diferenta *= 1000;
+        if (input.unitFinal > 4)
+            input.valoareFinala = valoareMetrii3 / diferenta;
+        else
+            input.valoareFinala = valoareMetrii3 * diferenta;
+    }
+}
+double transformareInSecunde()
+{
+    double valoareSecunde = 0;
+    if (input.unitInitial == 5)
+        valoareSecunde = input.valoareInitiala * 60;
+    if (input.unitInitial == 6)
+        valoareSecunde = input.valoareInitiala * 3600;
+    if (input.unitInitial == 7)
+        valoareSecunde = input.valoareInitiala * 86400;
+    if (input.unitInitial <5)
+    {
+        short exponent = abs(input.unitInitial-4);
+        unsigned long diferenta=1;
+        for (int i=0; i < exponent; i++)
+            diferenta *= 10;
+        valoareSecunde = input.valoareInitiala / diferenta;
+    }
+    return valoareSecunde;
+}
+void transformareDinSecunde( double valoareSecunde )
+{
+    if (input.unitFinal == 5)
+        input.valoareFinala = valoareSecunde / 60;
+    if (input.unitFinal == 6)
+        input.valoareFinala = valoareSecunde / 3600;
+    if (input.unitFinal == 7)
+        input.valoareFinala = valoareSecunde / 86400;
+    if (input.unitFinal < 5)
+    {
+        short exponent = abs(input.unitFinal-4);
+        unsigned long diferenta=1;
+        for (int i=0; i < exponent; i++)
+            diferenta *= 10;
+        input.valoareFinala = valoareSecunde * diferenta;
+    }
+}
+double transformareInMetriiSec()
+{
+    double valoareMetriiSec=0;
+    if (input.unitInitial == 1)
+        return input.valoareInitiala;
+    if (input.unitInitial == 2)
+        valoareMetriiSec = input.valoareInitiala * 0.44704;
+    if (input.unitInitial == 3)
+        valoareMetriiSec = input.valoareInitiala * 0.27777778;
+    return valoareMetriiSec;
+}
+void transformareDinMetriiSec( double valoareMetriiSec)
+{
+    if (input.unitFinal == 1)
+        input.valoareFinala = valoareMetriiSec;
+    if (input.unitFinal == 2)
+        input.valoareFinala = valoareMetriiSec / 0.44704;
+    if (input.unitFinal == 3)
+        input.valoareFinala = valoareMetriiSec / 0.27777778;
+}
+double transformareInC()
+{
+    double valoareC=0;
+    if (input.unitInitial == 1)
+        return input.valoareInitiala;
+    if (input.unitInitial == 2)
+        valoareC = (input.valoareInitiala - 32) * 5/9;
+    if (input.unitInitial == 3)
+        valoareC = input.valoareInitiala - 273.15;
+    return valoareC;
+}
+void transformareDinC( double valoareC)
+{
+    if (input.unitFinal == 1)
+        input.valoareFinala = valoareC;
+    if (input.unitFinal == 2)
+        input.valoareFinala = valoareC * 9/5 + 32;
+    if (input.unitFinal == 3)
+        input.valoareFinala = valoareC + 273.15;
+}
+double transformareInGrame()
+{
+    double valoareGrame=0;
+    if (input.unitInitial == 8)
+        valoareGrame = input.valoareInitiala * 453.592;
+    if (input.unitInitial == 9)
+        valoareGrame = input.valoareInitiala * 28.3495;
+    if (input.unitInitial == 10)
+        valoareGrame = input.valoareInitiala * 1000000;
+    if (input.unitInitial < 8)
+    {
+        short exponent = abs (input.unitInitial - 4);
+        unsigned long diferenta=1;
+        for (int i=0; i<exponent; i++)
+            diferenta *= 10;
+        if (input.unitInitial > 4)
+            valoareGrame = input.valoareInitiala * diferenta;
+        else
+            valoareGrame = input.valoareInitiala / diferenta;
+    }
+    return valoareGrame;
+}
+void transformareDinGrame( double valoareGrame )
+{
+    if (input.unitFinal == 8)
+        input.valoareFinala = valoareGrame / 453.592;
+    if (input.unitFinal == 9)
+        input.valoareFinala = valoareGrame / 28.3495;
+    if (input.unitFinal == 10)
+        input.valoareFinala = valoareGrame / 1000000;
+    if (input.unitFinal < 8)
+    {
+        short exponent = abs (input.unitFinal - 4);
+        unsigned long diferenta=1;
+        for (int i=0; i<exponent; i++)
+            diferenta *= 10;
+        if (input.unitFinal > 4)
+            input.valoareFinala = valoareGrame / diferenta;
+        else
+            input.valoareFinala = valoareGrame * diferenta;
+    }
+}
+double transformareInJoule()
+{
+    double valoareJoule = 0;
+    if (input.unitInitial == 1)
+        return input.valoareInitiala;
+    if (input.unitInitial == 2)
+        valoareJoule = input.valoareInitiala * 1000;
+    if (input.unitInitial == 3)
+        valoareJoule = input.valoareInitiala * 4.1868;
+    if (input.unitInitial == 4)
+        valoareJoule = input.valoareInitiala * 4186.8;
+    if (input.unitInitial == 6)
+        valoareJoule = input.valoareInitiala * 3600;
+    return valoareJoule;
+}
+void transformareDinJoule( double valoareJoule )
+{
+    if (input.unitFinal == 1)
+        input.valoareFinala = valoareJoule;
+    if (input.unitFinal == 2)
+        input.valoareFinala = valoareJoule / 1000;
+    if (input.unitFinal == 3)
+        input.valoareFinala = valoareJoule / 4.1868;
+    if (input.unitFinal == 4)
+        input.valoareFinala = valoareJoule / 4186.8;
+    if (input.unitFinal == 6)
+        input.valoareFinala = valoareJoule / 3600;
+}
+double transformareInPa()
+{
+    double valoarePa = 0;
+    if (input.unitInitial == 1)
+        return input.valoareInitiala;
+    if (input.unitInitial == 2)
+        valoarePa = input.valoareInitiala * 1000;
+    if (input.unitInitial == 3)
+        valoarePa = input.valoareInitiala * 1000000;
+    if (input.unitInitial == 4)
+        valoarePa = input.valoareInitiala * 98000;
+    if (input.unitInitial == 5)
+        valoarePa = input.valoareInitiala * 1000000;
+    if (input.unitInitial == 6)
+        valoarePa = input.valoareInitiala * 133.322368421;
+    if (input.unitInitial == 7)
+        valoarePa = input.valoareInitiala * 101325.2738;
+    if (input.unitInitial == 8)
+        valoarePa = input.valoareInitiala * 6894.75729317;
+    return valoarePa;
+}
+void transformareDinPa( double valoarePa )
+{
+    if (input.unitFinal == 1)
+        input.valoareFinala = valoarePa;
+    if (input.unitFinal == 2)
+        input.valoareFinala = valoarePa / 1000;
+    if (input.unitFinal == 3)
+        input.valoareFinala = valoarePa / 1000000;
+    if (input.unitFinal == 4)
+        input.valoareFinala = valoarePa / 98000;
+    if (input.unitFinal == 5)
+        input.valoareFinala = valoarePa / 1000000;
+    if (input.unitFinal == 6)
+        input.valoareFinala = valoarePa / 133.322368421;
+    if (input.unitFinal == 7)
+        input.valoareFinala = valoarePa / 101325.2738;
+    if (input.unitFinal == 8)
+        input.valoareFinala = valoarePa / 6894.75729317;
+}
+
+void lungime()
+{
+    if( !*input.expresie )
+    {
+        if (input.unitInitial == input.unitFinal)
+            cout<<fixed<<input.valoareInitiala;
+        else
+        {
+            double valoareMetrii = transformareInMetrii();
+            transformareDinMetrii(valoareMetrii);
+            cout<<fixed<<input.valoareFinala;
+        }
+    }
+    else
+    {
+        for (int i=0; i<strlen(input.expresie); i++);
+    }
+}
+void arie()
+{
+    if( !*input.expresie )
+    {
+        if (input.unitInitial == input.unitFinal)
+            cout<<fixed<<input.valoareInitiala;
+        else
+        {
+            double valoareMetrii2 = transformareInMetrii2();
+            transformareDinMetrii2(valoareMetrii2);
+            cout<<fixed<<input.valoareFinala;
+        }
+    }
+    else
+    {
+        for (int i=0; i<strlen(input.expresie); i++);
+    }
+
+}
+void volum()
+{
+    if( !*input.expresie )
+    {
+        if (input.unitInitial == input.unitFinal)
+            cout<<fixed<<input.valoareInitiala;
+        else
+        {
+            double valoareMetrii3 = transformareInMetrii3();
+            transformareDinMetrii3(valoareMetrii3);
+            cout<<fixed<<input.valoareFinala;
+        }
+    }
+    else
+    {
+        for (int i=0; i<strlen(input.expresie); i++);
+    }
+
+}
+void timp()
+{
+    if( !*input.expresie )
+    {
+        if (input.unitInitial == input.unitFinal)
+            cout<<fixed<<input.valoareInitiala;
+        else
+        {
+            double valoareSecunde=transformareInSecunde();
+            transformareDinSecunde(valoareSecunde);
+            cout<<fixed<<input.valoareFinala;
+        }
+    }
+    else
+    {
+        for (int i=0; i<strlen(input.expresie); i++);
+    }
+
+}
+void viteza()
+{
+    if( !*input.expresie )
+    {
+        if (input.unitInitial == input.unitFinal)
+            cout<<fixed<<input.valoareInitiala;
+        else
+        {
+            double valoareMetriiSec=transformareInMetriiSec();
+            transformareDinMetriiSec(valoareMetriiSec);
+            cout<<fixed<<input.valoareFinala;
+        }
+    }
+    else
+    {
+        
+    }
+}
+void temperatura()
+{
+    if( !*input.expresie )
+    {
+        if (input.unitInitial == input.unitFinal)
+            cout<<fixed<<input.valoareInitiala;
+        else
+        {
+            double valoareC=transformareInC();
+            transformareDinC(valoareC);
+            cout<<fixed<<input.valoareFinala;
+        }
+    }
+    else
+    {
+        
+    }
+}
+void masa()
+{
+    if( !*input.expresie )
+    {
+        if (input.unitInitial == input.unitFinal)
+            cout<<fixed<<input.valoareInitiala;
+        else
+        {
+            double valoareGrame=transformareInGrame();
+            transformareDinGrame(valoareGrame);
+            cout<<fixed<<input.valoareFinala;
+        }
+    }
+    else
+    {
+        
+    }
+}
+void energie()
+{
+    if( !*input.expresie )
+    {
+        if (input.unitInitial == 5)
+            input.unitInitial = 1;
+        if (input.unitFinal == 5)
+            input.unitFinal = 1;
+        
+        if (input.unitInitial == input.unitFinal)
+            cout<<fixed<<input.valoareInitiala;
+        else
+        {
+            double valoareJoule=transformareInJoule();
+            transformareDinJoule(valoareJoule);
+            cout<<fixed<<input.valoareFinala;
+        }
+    }
+    else
+    {
+        
+    }
+
+}
+void presiune()
+{
+    if( !*input.expresie )
+    {
+        if (input.unitInitial == input.unitFinal)
+            cout<<fixed<<input.valoareInitiala;
+        else
+        {
+            double valoarePa=transformareInPa();
+            transformareDinPa(valoarePa);
+            cout<<fixed<<input.valoareFinala;
+        }
+    }
+    else
+    {
+        
+    }
+}
+void densitate()
+{
+    
+}
+void consumCombustibil()
+{
+    
+}
+
+
+void analizaInput( int numarCitit )
+{
+    if (numarCitit == 1)
+        lungime();
+    else
+    if (numarCitit == 2)
+        arie();
+    else
+    if (numarCitit == 3)
+        volum();
+    else
+    if (numarCitit == 4)
+        timp();
+    else
+    if (numarCitit == 5)
+        viteza();
+    else
+    if (numarCitit == 6)
+        temperatura();
+    else
+    if (numarCitit == 7)
+        masa();
+    else
+    if (numarCitit == 8)
+        energie();
+    else
+    if (numarCitit == 9)
+        presiune();
+    else
+    if (numarCitit == 10)
+        densitate();
+    else
+    if (numarCitit == 11)
+        consumCombustibil();
+}
+void textLungime()
+{
+    cout<<"1. mm\n";
+    cout<<"2. cm\n";
+    cout<<"3. dm\n";
+    cout<<"4. m\n";
+    cout<<"5. dam\n";
+    cout<<"6. hm\n";
+    cout<<"7. km\n";
+    cout<<"8. in\n";
+    cout<<"9. ft\n";
+    cout<<"10. yd\n";
+}
+void textArie()
+{
+    cout<<"1. mm^2\n";
+    cout<<"2. cm^2\n";
+    cout<<"3. dm^2\n";
+    cout<<"4. m^2\n";
+    cout<<"5. dam^2\n";
+    cout<<"6. hm^2\n";
+    cout<<"7. km^2\n";
+    cout<<"8. in^2\n";
+    cout<<"9. ft^2\n";
+    cout<<"10. yd^2\n";
+
+}
+void textVolum()
+{
+    cout<<"1. mm^3\n";
+    cout<<"2. cm^3\n";
+    cout<<"3. dm^3\n";
+    cout<<"4. m^3\n";
+    cout<<"5. dam^3\n";
+    cout<<"6. hm^3\n";
+    cout<<"7. km^3\n";
+    cout<<"8. in^3\n";
+    cout<<"9. ft^3\n";
+    cout<<"10. yd^3\n";
+
+}
+void textTimp()
+{
+    cout<<"1. ms\n";
+    cout<<"2. cs\n";
+    cout<<"3. ds\n";
+    cout<<"4. s\n";
+    cout<<"5. min\n";
+    cout<<"6. h\n";
+    cout<<"7. zi\n";
+}
+void textViteza()
+{
+    cout<<"1. m/s\n";
+    cout<<"2. mph\n";
+    cout<<"3. km/h\n";
+}
+void textTemperatura()
+{
+    cout<<"1. C\n";
+    cout<<"2. F\n";
+    cout<<"3. K\n";
+}
+void textMasa()
+{
+    cout<<"1. mg\n";
+    cout<<"2. cg\n";
+    cout<<"3. dg\n";
+    cout<<"4. g\n";
+    cout<<"5. dag\n";
+    cout<<"6. hg\n";
+    cout<<"7. kg\n";
+    cout<<"8. lb\n";
+    cout<<"9. oz\n";
+    cout<<"10. t\n";
+}
+void textEnergie()
+{
+    cout<<"1. J\n";
+    cout<<"2. kJ\n";
+    cout<<"3. cal\n";
+    cout<<"4. kcal\n";
+    cout<<"5. W/s\n";
+    cout<<"6. W/h\n";
+    
+}
+void textPresiune()
+{
+    cout<<"1. Pa\n";
+    cout<<"2. kPa\n";
+    cout<<"3. MPa\n";
+    cout<<"4. bar\n";
+    cout<<"5. N/mm^2\n";
+    cout<<"6. Torr\n";
+    cout<<"7. atm\n";
+    cout<<"8. PSI\n";
+}
+void textDensitate()
+{
+    
+}
+void textCombustibil()
+{
+    
+}
+
+void citire1()
+{
+    cout<<"Introduceti expresia\n";
+    cout<<"(Exemplu pentru conversie din km si m in mm):\n";
+    cout<<"(3km+2m) = mm\n";
+    
+    cin>>input.expresie;
+    
+    analizaInput(input.unitMasura);
+}
+
+void afisareTextUnitMasura()
+{
+    if (input.unitMasura == 1)
+        textLungime();
+    if (input.unitMasura == 2)
+        textArie();
+    if (input.unitMasura == 3)
+        textVolum();
+    if (input.unitMasura == 4)
+        textTimp();
+    if (input.unitMasura == 5)
+        textViteza();
+    if (input.unitMasura == 6)
+        textTemperatura();
+    if (input.unitMasura == 7)
+        textMasa();
+    if (input.unitMasura == 8)
+        textEnergie();
+    if (input.unitMasura == 9)
+        textPresiune();
+    if (input.unitMasura == 10)
+        textDensitate();
+    if (input.unitMasura == 11)
+        textCombustibil();
+}
+void citire2()
+{
+    afisareTextUnitMasura();
+    bool ok = true;
+    
+    cout<<"Unitatea de masura initiala = ";
+    cin>>input.unitInitial;
+    
+    if ((input.unitInitial > 10 || (input.unitInitial>6 && input.unitMasura==5)) || input.unitInitial < 1)
+    {
+        cout<<"Cerere invalida";
+        ok = false;
+    }
+    else
+    {
+        cout<<"Valoarea = ";
+        cin>>input.valoareInitiala;
+
+        cout<<"Unitatea de masura in care sa fie convertita valoarea = ";
+        cin>>input.unitFinal;
+        if (input.unitFinal > 10 || input.unitFinal < 1)
+        {
+            cout<<"Cerere invalida";
+            ok = false;
+        }
+    }
+    
+    if (ok)
+        analizaInput(input.unitMasura);
+}
+bool citireUnitateMasura()
+{
+    cout<< "Selectati unitatea de masura:\n";
+    cout<<"1. Lungime\n";
+    cout<<"2. Arie\n";
+    cout<<"3. Volum\n";
+    cout<<"4. Timp\n";
+    cout<<"5. Viteza\n";
+    cout<<"6. Temperatură\n";
+    cout<<"7. Masa\n";
+    cout<<"8. Energie\n";
+    cout<<"9. Presiune\n";
+    cout<<"10. Densitate\n";
+    cout<<"11. Consum combustibil\n";
+    
+    cin>>input.unitMasura;
+    if (input.unitMasura > 11 || input.unitMasura < 1)
+    {
+        cout<<"Cerere invalida";
+        return false;
+    }
+    return true;
+}
+
+void interogare()
+{
+    cout<<"Selectati tipul de convertor:\n";
+    cout<<"1. Pentru expresie\n";
+    cout<<"2. Clasic\n";
+    
+    cin>>raspuns;
+    
+    if (raspuns<1 || raspuns>2)
+        cout<< "Cerere invalida";
+    else
+    if (citireUnitateMasura())
+    {
+        if (raspuns == 1)
+            citire1();
+        else
+        if (raspuns == 2)
+            citire2();
+    }
+}
+
+int main()
+{
+    interogare();
+}
