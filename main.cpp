@@ -13,20 +13,75 @@ struct
     char expresie[256];
 }input;
 
+double transformareInMetrii()
+{
+    double valoareMetrii=0;
+    if (input.unitInitial == 8)
+        valoareMetrii = input.valoareInitiala * 0.0254;
+    if (input.unitInitial == 9)
+        valoareMetrii = input.valoareInitiala * 0.3048;
+    if (input.unitInitial == 10)
+        valoareMetrii = input.valoareInitiala * 0.9144002494;
+    if (input.unitInitial < 8)
+    {
+        short exponent = abs (input.unitInitial - 4);
+        unsigned long diferenta=1;
+        for (int i=0; i<exponent; i++)
+            diferenta *= 10;
+        if (input.unitInitial > 4)
+            valoareMetrii = input.valoareInitiala * diferenta;
+        else
+            valoareMetrii = input.valoareInitiala / diferenta;
+    }
+    return valoareMetrii;
+}
 
+void transformareDinMetrii( double valoareMetrii )
+{
+    if (input.unitFinal == 8)
+        input.valoareFinala = valoareMetrii / 0.0254;
+    if (input.unitFinal == 9)
+        input.valoareFinala = valoareMetrii / 0.3048;
+    if (input.unitFinal == 10)
+        input.valoareFinala = valoareMetrii / 0.9144002494;
+    if (input.unitFinal < 8)
+    {
+        short exponent = abs (input.unitFinal - 4);
+        unsigned long diferenta=1;
+        for (int i=0; i<exponent; i++)
+            diferenta *= 10;
+        if (input.unitFinal > 4)
+            input.valoareFinala = valoareMetrii / diferenta;
+        else
+            input.valoareFinala = valoareMetrii * diferenta;
+    }
+}
 void lungime()
 {
     if( !*input.expresie )
     {
-        short exponent = abs(input.unitFinal-input.unitInitial);
-        unsigned long diferenta=1;
-        for (int i=0; i < exponent; i++)
-            diferenta *= 10;
-        if (input.unitInitial > input.unitFinal)
-            input.valoareFinala = input.valoareInitiala * diferenta;
+        if (input.unitInitial == input.unitFinal)
+            cout<<input.valoareInitiala;
         else
-            input.valoareFinala = input.valoareInitiala / diferenta;
-        cout<<input.valoareFinala;
+        if (input.unitInitial <= 7 && input.unitFinal <= 7)
+        {
+            short exponent = abs(input.unitFinal-input.unitInitial);
+            unsigned long diferenta=1;
+            for (int i=0; i < exponent; i++)
+                diferenta *= 10;
+            if (input.unitInitial > input.unitFinal)
+                input.valoareFinala = input.valoareInitiala * diferenta;
+            else
+                input.valoareFinala = input.valoareInitiala / diferenta;
+            cout<<input.valoareFinala;
+        }
+        else
+        {
+            double valoareMetrii = transformareInMetrii();
+            transformareDinMetrii(valoareMetrii);
+            cout<<input.valoareFinala;
+
+        }
     }
     else
     {
@@ -37,15 +92,20 @@ void arie()
 {
     if( !*input.expresie )
     {
-        short exponent = abs(input.unitFinal-input.unitInitial);
-        unsigned long diferenta=1;
-        for (int i=0; i < exponent; i++)
-            diferenta *= 100;
-        if (input.unitInitial > input.unitFinal)
-            input.valoareFinala = input.valoareInitiala * diferenta;
+        if (input.unitInitial == input.unitFinal)
+            cout<<input.valoareInitiala;
         else
-            input.valoareFinala = input.valoareInitiala / diferenta;
-        cout<<input.valoareFinala;
+        {
+            short exponent = abs(input.unitFinal-input.unitInitial);
+            unsigned long diferenta=1;
+            for (int i=0; i < exponent; i++)
+                diferenta *= 100;
+            if (input.unitInitial > input.unitFinal)
+                input.valoareFinala = input.valoareInitiala * diferenta;
+            else
+                input.valoareFinala = input.valoareInitiala / diferenta;
+            cout<<input.valoareFinala;
+        }
     }
     else
     {
@@ -57,15 +117,20 @@ void volum()
 {
     if( !*input.expresie )
     {
-        short exponent = abs(input.unitFinal-input.unitInitial);
-        unsigned long diferenta=1;
-        for (int i=0; i < exponent; i++)
-            diferenta *= 1000;
-        if (input.unitInitial > input.unitFinal)
-            input.valoareFinala = input.valoareInitiala * diferenta;
+        if (input.unitInitial == input.unitFinal)
+            cout<<input.valoareInitiala;
         else
-            input.valoareFinala = input.valoareInitiala / diferenta;
-        cout<<input.valoareFinala;
+        {
+            short exponent = abs(input.unitFinal-input.unitInitial);
+            unsigned long diferenta=1;
+            for (int i=0; i < exponent; i++)
+                diferenta *= 1000;
+            if (input.unitInitial > input.unitFinal)
+                input.valoareFinala = input.valoareInitiala * diferenta;
+            else
+                input.valoareFinala = input.valoareInitiala / diferenta;
+            cout<<input.valoareFinala;
+        }
     }
     else
     {
@@ -75,7 +140,64 @@ void volum()
 }
 void timp()
 {
-    
+    double valoareSecunde=0;
+    if( !*input.expresie )
+    {
+        if (input.unitInitial == input.unitFinal)
+            cout<<input.valoareInitiala;
+        else
+        if (input.unitInitial <= 4 && input.unitFinal <= 4)
+        {
+            short exponent = abs(input.unitFinal-input.unitInitial);
+            unsigned long diferenta=1;
+            for (int i=0; i < exponent; i++)
+                diferenta *= 10;
+            if (input.unitInitial > input.unitFinal)
+                input.valoareFinala = input.valoareInitiala * diferenta;
+            else
+                input.valoareFinala = input.valoareInitiala / diferenta;
+            cout<<input.valoareFinala;
+        }
+        else
+        {
+            if (input.unitInitial == 5)
+                valoareSecunde = input.valoareInitiala * 60;
+            if (input.unitInitial == 6)
+                valoareSecunde = input.valoareInitiala * 3600;
+            if (input.unitInitial == 7)
+                valoareSecunde = input.valoareInitiala * 86400;
+            if (input.unitInitial <5)
+            {
+                short exponent = abs(input.unitInitial-4);
+                unsigned long diferenta=1;
+                for (int i=0; i < exponent; i++)
+                    diferenta *= 10;
+                valoareSecunde = input.valoareInitiala / diferenta;
+
+            }
+            
+            if (input.unitFinal == 5)
+                input.valoareFinala = valoareSecunde / 60;
+            if (input.unitFinal == 6)
+                input.valoareFinala = valoareSecunde / 3600;
+            if (input.unitFinal == 7)
+                input.valoareFinala = valoareSecunde / 86400;
+            if (input.unitFinal < 5)
+            {
+                short exponent = abs(input.unitFinal-4);
+                unsigned long diferenta=1;
+                for (int i=0; i < exponent; i++)
+                    diferenta *= 10;
+                input.valoareFinala = valoareSecunde * diferenta;
+            }
+            cout<<input.valoareFinala;
+        }
+    }
+    else
+    {
+        for (int i=0; i<strlen(input.expresie); i++);
+    }
+
 }
 void viteza()
 {
@@ -151,6 +273,9 @@ void textLungime()
     cout<<"5. dam\n";
     cout<<"6. hm\n";
     cout<<"7. km\n";
+    cout<<"8. in\n";
+    cout<<"9. ft\n";
+    cout<<"10. yd\n";
 }
 void textArie()
 {
@@ -184,7 +309,12 @@ void textTimp()
 }
 void textViteza()
 {
-    
+    cout<<"1. m/s\n";
+    cout<<"2. m/min\n";
+    cout<<"3. m/h\n";
+    cout<<"4. km/s\n";
+    cout<<"5. km/min\n";
+    cout<<"6. km/h\n";
 }
 void textTemperatura()
 {
@@ -252,10 +382,10 @@ void citire2()
     afisareTextUnitMasura();
     bool ok = true;
     
-    cout<<"Unitatea de masura initiala:\n";
+    cout<<"Unitatea de masura initiala = ";
     cin>>input.unitInitial;
     
-    if (input.unitInitial > 7 || input.unitInitial < 1)
+    if ((input.unitInitial > 10 || (input.unitInitial>6 && input.unitMasura==5)) || input.unitInitial < 1)
     {
         cout<<"Cerere invalida";
         ok = false;
@@ -264,9 +394,10 @@ void citire2()
     {
         cout<<"Valoarea = ";
         cin>>input.valoareInitiala;
+
         cout<<"Unitatea de masura in care sa fie convertita valoarea = ";
         cin>>input.unitFinal;
-        if (input.unitFinal > 7 || input.unitFinal < 1)
+        if (input.unitFinal > 10 || input.unitFinal < 1)
         {
             cout<<"Cerere invalida";
             ok = false;
