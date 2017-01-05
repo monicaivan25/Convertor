@@ -13,6 +13,7 @@ struct
     char expresie[256];
 }input;
 
+
 double transformareInMetrii()
 {
     double valoareMetrii=0;
@@ -35,7 +36,6 @@ double transformareInMetrii()
     }
     return valoareMetrii;
 }
-
 void transformareDinMetrii( double valoareMetrii )
 {
     if (input.unitFinal == 8)
@@ -56,31 +56,139 @@ void transformareDinMetrii( double valoareMetrii )
             input.valoareFinala = valoareMetrii * diferenta;
     }
 }
+double transformareInMetrii2()
+{
+    double valoareMetrii2=0;
+    if (input.unitInitial == 8)
+        valoareMetrii2 = input.valoareInitiala * 0.0006452;
+    if (input.unitInitial == 9)
+        valoareMetrii2 = input.valoareInitiala * 0.0929;
+    if (input.unitInitial == 10)
+        valoareMetrii2 = input.valoareInitiala * 0.836127816;
+    if (input.unitInitial < 8)
+    {
+        short exponent = abs (input.unitInitial - 4);
+        unsigned long diferenta=1;
+        for (int i=0; i<exponent; i++)
+            diferenta *= 100;
+        if (input.unitInitial > 4)
+            valoareMetrii2 = input.valoareInitiala * diferenta;
+        else
+            valoareMetrii2 = input.valoareInitiala / diferenta;
+    }
+    return valoareMetrii2;
+
+}
+void transformareDinMetrii2( double valoareMetrii2 )
+{
+    if (input.unitFinal == 8)
+        input.valoareFinala = valoareMetrii2 / 0.0006452;
+    if (input.unitFinal == 9)
+        input.valoareFinala = valoareMetrii2 / 0.0929;
+    if (input.unitFinal == 10)
+        input.valoareFinala = valoareMetrii2 / 0.836127816;
+    if (input.unitFinal < 8)
+    {
+        short exponent = abs (input.unitFinal - 4);
+        unsigned long diferenta=1;
+        for (int i=0; i<exponent; i++)
+            diferenta *= 100;
+        if (input.unitFinal > 4)
+            input.valoareFinala = valoareMetrii2 / diferenta;
+        else
+            input.valoareFinala = valoareMetrii2 * diferenta;
+    }
+}
+double transformareInMetrii3()
+{
+    double valoareMetrii3=0;
+    if (input.unitInitial == 8)
+        valoareMetrii3 = input.valoareInitiala * 0.000016387064;
+    if (input.unitInitial == 9)
+        valoareMetrii3 = input.valoareInitiala * 0.02832;
+    if (input.unitInitial == 10)
+        valoareMetrii3 = input.valoareInitiala * 0.76456;
+    if (input.unitInitial < 8)
+    {
+        short exponent = abs (input.unitInitial - 4);
+        unsigned long diferenta=1;
+        for (int i=0; i<exponent; i++)
+            diferenta *= 1000;
+        if (input.unitInitial > 4)
+            valoareMetrii3 = input.valoareInitiala * diferenta;
+        else
+            valoareMetrii3 = input.valoareInitiala / diferenta;
+    }
+    return valoareMetrii3;
+    
+}
+void transformareDinMetrii3( double valoareMetrii3 )
+{
+    if (input.unitFinal == 8)
+        input.valoareFinala = valoareMetrii3 / 0.000016387064;
+    if (input.unitFinal == 9)
+        input.valoareFinala = valoareMetrii3 / 0.02832;
+    if (input.unitFinal == 10)
+        input.valoareFinala = valoareMetrii3 / 0.76456;
+    if (input.unitFinal < 8)
+    {
+        short exponent = abs (input.unitFinal - 4);
+        unsigned long diferenta=1;
+        for (int i=0; i<exponent; i++)
+            diferenta *= 1000;
+        if (input.unitFinal > 4)
+            input.valoareFinala = valoareMetrii3 / diferenta;
+        else
+            input.valoareFinala = valoareMetrii3 * diferenta;
+    }
+}
+double transformareInSecunde()
+{
+    double valoareSecunde = 0;
+    if (input.unitInitial == 5)
+        valoareSecunde = input.valoareInitiala * 60;
+    if (input.unitInitial == 6)
+        valoareSecunde = input.valoareInitiala * 3600;
+    if (input.unitInitial == 7)
+        valoareSecunde = input.valoareInitiala * 86400;
+    if (input.unitInitial <5)
+    {
+        short exponent = abs(input.unitInitial-4);
+        unsigned long diferenta=1;
+        for (int i=0; i < exponent; i++)
+            diferenta *= 10;
+        valoareSecunde = input.valoareInitiala / diferenta;
+    }
+    return valoareSecunde;
+}
+void transformareDinSecunde( double valoareSecunde )
+{
+    if (input.unitFinal == 5)
+        input.valoareFinala = valoareSecunde / 60;
+    if (input.unitFinal == 6)
+        input.valoareFinala = valoareSecunde / 3600;
+    if (input.unitFinal == 7)
+        input.valoareFinala = valoareSecunde / 86400;
+    if (input.unitFinal < 5)
+    {
+        short exponent = abs(input.unitFinal-4);
+        unsigned long diferenta=1;
+        for (int i=0; i < exponent; i++)
+            diferenta *= 10;
+        input.valoareFinala = valoareSecunde * diferenta;
+    }
+}
 void lungime()
 {
     if( !*input.expresie )
     {
         if (input.unitInitial == input.unitFinal)
-            cout<<input.valoareInitiala;
-        else
-        if (input.unitInitial <= 7 && input.unitFinal <= 7)
-        {
-            short exponent = abs(input.unitFinal-input.unitInitial);
-            unsigned long diferenta=1;
-            for (int i=0; i < exponent; i++)
-                diferenta *= 10;
-            if (input.unitInitial > input.unitFinal)
-                input.valoareFinala = input.valoareInitiala * diferenta;
-            else
-                input.valoareFinala = input.valoareInitiala / diferenta;
-            cout<<input.valoareFinala;
-        }
+            cout<<fixed<<input.valoareInitiala;
         else
         {
             double valoareMetrii = transformareInMetrii();
             transformareDinMetrii(valoareMetrii);
-            cout<<input.valoareFinala;
-
+            cout<<fixed<<input.valoareFinala;
         }
     }
     else
@@ -93,18 +201,12 @@ void arie()
     if( !*input.expresie )
     {
         if (input.unitInitial == input.unitFinal)
-            cout<<input.valoareInitiala;
+            cout<<fixed<<input.valoareInitiala;
         else
         {
-            short exponent = abs(input.unitFinal-input.unitInitial);
-            unsigned long diferenta=1;
-            for (int i=0; i < exponent; i++)
-                diferenta *= 100;
-            if (input.unitInitial > input.unitFinal)
-                input.valoareFinala = input.valoareInitiala * diferenta;
-            else
-                input.valoareFinala = input.valoareInitiala / diferenta;
-            cout<<input.valoareFinala;
+            double valoareMetrii2 = transformareInMetrii2();
+            transformareDinMetrii2(valoareMetrii2);
+            cout<<fixed<<input.valoareFinala;
         }
     }
     else
@@ -121,15 +223,9 @@ void volum()
             cout<<input.valoareInitiala;
         else
         {
-            short exponent = abs(input.unitFinal-input.unitInitial);
-            unsigned long diferenta=1;
-            for (int i=0; i < exponent; i++)
-                diferenta *= 1000;
-            if (input.unitInitial > input.unitFinal)
-                input.valoareFinala = input.valoareInitiala * diferenta;
-            else
-                input.valoareFinala = input.valoareInitiala / diferenta;
-            cout<<input.valoareFinala;
+            double valoareMetrii3 = transformareInMetrii3();
+            transformareDinMetrii3(valoareMetrii3);
+            cout<<fixed<<input.valoareFinala;
         }
     }
     else
@@ -140,57 +236,15 @@ void volum()
 }
 void timp()
 {
-    double valoareSecunde=0;
     if( !*input.expresie )
     {
         if (input.unitInitial == input.unitFinal)
             cout<<input.valoareInitiala;
         else
-        if (input.unitInitial <= 4 && input.unitFinal <= 4)
         {
-            short exponent = abs(input.unitFinal-input.unitInitial);
-            unsigned long diferenta=1;
-            for (int i=0; i < exponent; i++)
-                diferenta *= 10;
-            if (input.unitInitial > input.unitFinal)
-                input.valoareFinala = input.valoareInitiala * diferenta;
-            else
-                input.valoareFinala = input.valoareInitiala / diferenta;
-            cout<<input.valoareFinala;
-        }
-        else
-        {
-            if (input.unitInitial == 5)
-                valoareSecunde = input.valoareInitiala * 60;
-            if (input.unitInitial == 6)
-                valoareSecunde = input.valoareInitiala * 3600;
-            if (input.unitInitial == 7)
-                valoareSecunde = input.valoareInitiala * 86400;
-            if (input.unitInitial <5)
-            {
-                short exponent = abs(input.unitInitial-4);
-                unsigned long diferenta=1;
-                for (int i=0; i < exponent; i++)
-                    diferenta *= 10;
-                valoareSecunde = input.valoareInitiala / diferenta;
-
-            }
-            
-            if (input.unitFinal == 5)
-                input.valoareFinala = valoareSecunde / 60;
-            if (input.unitFinal == 6)
-                input.valoareFinala = valoareSecunde / 3600;
-            if (input.unitFinal == 7)
-                input.valoareFinala = valoareSecunde / 86400;
-            if (input.unitFinal < 5)
-            {
-                short exponent = abs(input.unitFinal-4);
-                unsigned long diferenta=1;
-                for (int i=0; i < exponent; i++)
-                    diferenta *= 10;
-                input.valoareFinala = valoareSecunde * diferenta;
-            }
-            cout<<input.valoareFinala;
+            double valoareSecunde=transformareInSecunde();
+            transformareDinSecunde(valoareSecunde);
+            cout<<fixed<<input.valoareFinala;
         }
     }
     else
@@ -286,6 +340,10 @@ void textArie()
     cout<<"5. dam^2\n";
     cout<<"6. hm^2\n";
     cout<<"7. km^2\n";
+    cout<<"8. in^2\n";
+    cout<<"9. ft^2\n";
+    cout<<"10. yd^2\n";
+
 }
 void textVolum()
 {
@@ -296,6 +354,10 @@ void textVolum()
     cout<<"5. dam^3\n";
     cout<<"6. hm^3\n";
     cout<<"7. km^3\n";
+    cout<<"8. in^3\n";
+    cout<<"9. ft^3\n";
+    cout<<"10. yd^3\n";
+
 }
 void textTimp()
 {
@@ -439,6 +501,9 @@ void interogare()
     
     cin>>raspuns;
     
+    if (raspuns<1 || raspuns>2)
+        cout<< "Cerere invalida";
+    else
     if (citireUnitateMasura())
     {
         if (raspuns == 1)
@@ -446,8 +511,6 @@ void interogare()
         else
         if (raspuns == 2)
             citire2();
-        else
-            cout<< "Cerere invalida";
     }
 }
 
