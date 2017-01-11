@@ -3,8 +3,8 @@
 
 using namespace std;
 
-char sep[]="!+-*/@£$%^&()_}{|':?><±§`~\ ;][,", operatori[]="+-/%";
-char dictionar[11][4];
+char sep[]="!@£$%^&()_}{|':?><±§`~ ;][,", operatori[]="+-/%";
+char dictionar[11][8];
 int nrUnit;
 short raspuns;
 
@@ -540,12 +540,26 @@ void transformareDinL100km( double valoareL100km)
 
 // ANALIZA EXPRESIE //
 
+bool valid( char * p )
+{
+    for( int i=0; i<strlen(sep); i++)
+        if(strchr(p,sep[i]))
+        {
+            cout<<"Cerere invalida";
+            return false;
+        }
+    return true;
+}
+
 bool verificareCifra( char * p )
 {
     return *p <= '9' && *p >='0';
 }
 void getValoareInitiala( char *p )
 {
+    while (!verificareCifra(p))
+        strcpy(p,p+1);
+    
     input.valoareInitiala = 0;
     char valoareInitiala[256];
     short i=0;
@@ -558,31 +572,38 @@ void getValoareInitiala( char *p )
 }
 bool getUnitateInitiala( char *p )
 {
-    char aux[256];
-    strcpy(aux,p);
-    cout<<*aux<<endl;
-    for (int i=1; i<=nrUnit; i++)
-        if (strstr(aux, dictionar[i]))
+    for (int i=1; i<=10; i++)
+        if (strstr(p, dictionar[i]) && i!=4)
         {
             input.unitInitial = i;
+            strcpy(p,p+strlen(dictionar[i]));
             return true;
         }
+    if (strchr(p,'m'))
+    {
+        input.unitInitial = 4;
+        strcpy(p,p+1);
+        return true;
+    }
     return false;
 }
-void getValoareFinala( char *p )
+bool getUnitateFinala( char *p )
 {
-    input.valoareFinala = 0;
-    char valoareFinala[256];
-    short i=0;
-    while ( verificareCifra(p) || *p == '.')
+    for (int i=1; i<=10; i++)
+        if (strstr(p, dictionar[i]) && i!=4)
+        {
+            input.unitFinal = i;
+            strcpy(p,p+strlen(dictionar[i]));
+            return true;
+        }
+    if (strstr(p,"m"))
     {
-        valoareFinala[i++]=*p;
+        input.unitFinal = 4;
         strcpy(p,p+1);
+        return true;
     }
-    input.valoareFinala = atof(valoareFinala);
+    return false;
 }
-
-
 
 
 
@@ -604,24 +625,33 @@ void lungime()
     else
     {
         char *p;
-        p=strtok(input.expresie, sep);
-        //while (p)
+        double valoareMetrii=0;
+        p=input.expresie;
+        if(valid(p))
         {
-            while (!verificareCifra(p))
-                strcpy(p,p+1);
-            
             getValoareInitiala(p);
-
-            cout<<input.valoareInitiala<<endl<<*p;
-            
-            if(!getUnitateInitiala(p))
-            {
+        if(!getUnitateInitiala(p))
                 cout<<"Cerere invalida";
-            }
-            else
-            {
-                cout<<input.unitInitial<<endl;
-            }
+        else
+            valoareMetrii = transformareInMetrii();
+        cout<<input.unitInitial<<input.valoareInitiala<<endl;
+        
+        getValoareInitiala(p);
+                
+        if(!getUnitateInitiala(p))
+            cout<<"Cerere invalida";
+        else
+            valoareMetrii += transformareInMetrii();
+        cout<<valoareMetrii<<endl;
+        
+        if(!getUnitateFinala(p))
+            cout<<"Cerere invalida";
+        else
+        {
+            cout<<"valmetrii="<<valoareMetrii<<endl;
+            transformareDinMetrii(valoareMetrii);
+            cout<<fixed<<input.valoareFinala;
+        }
         }
     }
 }
@@ -823,6 +853,7 @@ void consumCombustibil()
 
 // CITIRE SI AFISARE TEXT //
 
+
 void analizaInput( int numarCitit )
 {
     if (numarCitit == 1)
@@ -858,121 +889,9 @@ void analizaInput( int numarCitit )
     if (numarCitit == 11)
         consumCombustibil();
 }
-void textLungime()
-{
-    nrUnit=10;
-    dictionarLungime();
-    for (int i=1; i<11; i++)
-        cout<<i<<". "<<dictionar[i]<<endl;
-}
-void textArie()
-{
-    nrUnit=10;
-    dictionarArie();
-    for (int i=1; i<11; i++)
-        cout<<i<<". "<<dictionar[i]<<endl;
-}
-void textVolum()
-{
-    nrUnit=10;
-    dictionarVolum();
-    for (int i=1; i<=nrUnit; i++)
-        cout<<i<<". "<<dictionar[i]<<endl;
 
-}
-void textTimp()
-{
-    nrUnit=9;
-    dictionarVolum();
-    for (int i=1; i<=nrUnit; i++)
-        cout<<i<<". "<<dictionar[i]<<endl;
-}
-void textViteza()
-{
-    nrUnit=3;
-    dictionarVolum();
-    for (int i=1; i<=nrUnit; i++)
-        cout<<i<<". "<<dictionar[i]<<endl;
-}
-void textTemperatura()
-{
-    nrUnit=3;
-    dictionarTemperatura();
-    for (int i=1; i<=nrUnit; i++)
-        cout<<i<<". "<<dictionar[i]<<endl;
-}
-void textMasa()
-{
-    nrUnit=10;
-    dictionarMasa();
-    for (int i=1; i<=nrUnit; i++)
-        cout<<i<<". "<<dictionar[i]<<endl;
-}
-void textEnergie()
-{
-    nrUnit=6;
-    dictionarEnergie();
-    for (int i=1; i<=nrUnit; i++)
-        cout<<i<<". "<<dictionar[i]<<endl;
-}
-void textPresiune()
-{
-    nrUnit=8;
-    dictionarPresiune();
-    for (int i=1; i<=nrUnit; i++)
-        cout<<i<<". "<<dictionar[i]<<endl;
-}
-void textDensitate()
-{
-    nrUnit=7;
-    dictionarDensitate();
-    for (int i=1; i<=nrUnit; i++)
-        cout<<i<<". "<<dictionar[i]<<endl;
-}
-void textCombustibil()
-{
-    nrUnit=3;
-    dictionarConsumCombustibil();
-    for (int i=1; i<=nrUnit; i++)
-        cout<<i<<". "<<dictionar[i]<<endl;
-}
 
-void citire2()
-{
-    cout<<"Introduceti expresia\n";
-    cout<<"(Exemplu pentru conversie din km si m in mm):\n";
-    cout<<"(3km+2m) = mm\n";
-    
-    cin>>input.expresie;
-    
-    analizaInput(input.unitMasura);
-}
 
-void afisareTextUnitMasura()
-{
-    if (input.unitMasura == 1)
-        textLungime();
-    if (input.unitMasura == 2)
-        textArie();
-    if (input.unitMasura == 3)
-        textVolum();
-    if (input.unitMasura == 4)
-        textTimp();
-    if (input.unitMasura == 5)
-        textViteza();
-    if (input.unitMasura == 6)
-        textTemperatura();
-    if (input.unitMasura == 7)
-        textMasa();
-    if (input.unitMasura == 8)
-        textEnergie();
-    if (input.unitMasura == 9)
-        textPresiune();
-    if (input.unitMasura == 10)
-        textDensitate();
-    if (input.unitMasura == 11)
-        textCombustibil();
-}
 bool verificareDateIntrare( short x )
 {
     if (x < 1)
@@ -997,8 +916,74 @@ bool verificareDateIntrare( short x )
             return false;
     return true;
 }
+
+void creeareDictionar()
+{
+    if (input.unitMasura == 1)
+    {
+        nrUnit=10;
+        dictionarLungime();
+    }
+    if (input.unitMasura == 2)
+    {
+        nrUnit=10;
+        dictionarArie();
+    }
+    if (input.unitMasura == 3)
+    {
+        nrUnit=10;
+        dictionarVolum();
+    }
+    if (input.unitMasura == 4)
+    {
+        nrUnit=9;
+        dictionarTimp();
+    }
+    if (input.unitMasura == 5)
+    {
+        nrUnit=3;
+        dictionarViteza();
+    }
+    if (input.unitMasura == 6)
+    {
+        nrUnit=3;
+        dictionarTemperatura();
+    }
+    if (input.unitMasura == 7)
+    {
+        nrUnit=10;
+        dictionarMasa();
+    }
+    if (input.unitMasura == 8)
+    {
+        nrUnit=6;
+        dictionarEnergie();
+    }
+    if (input.unitMasura == 9)
+    {
+        nrUnit=8;
+        dictionarPresiune();
+    }
+    if (input.unitMasura == 10)
+    {
+        nrUnit=7;
+        dictionarDensitate();
+    }
+    if (input.unitMasura == 11)
+    {
+        nrUnit=3;
+        dictionarConsumCombustibil();
+    }
+}
+void afisareTextUnitMasura()
+{
+    for (int i=1; i<=nrUnit; i++)
+        cout<<i<<". "<<dictionar[i]<<endl;
+}
+
 void citire1()
 {
+    creeareDictionar();
     afisareTextUnitMasura();
     bool ok = true;
     
@@ -1026,6 +1011,16 @@ void citire1()
     
     if (ok)
         analizaInput(input.unitMasura);
+}
+void citire2()
+{
+    cout<<"Introduceti expresia (conversie maxima din 2 unitati de masura intr-una)\n";
+    cout<<"Exemplu pentru conversie din km si m in mm:\n";
+    cout<<"3km+2m=mm\n";
+    
+    cin>>input.expresie;
+    creeareDictionar();
+    analizaInput(input.unitMasura);
 }
 bool citireUnitateMasura()
 {
