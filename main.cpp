@@ -1,5 +1,7 @@
 #include <iostream>
-#include <string>
+#include <cstring>
+#include <cmath>
+#include <cstdlib>
 
 using namespace std;
 
@@ -8,7 +10,7 @@ char dictionar[11][8];
 int nrUnit;
 short raspuns;
 
-struct
+struct date
 {
     int unitMasura;
     double valoareInitiala, valoareFinala;
@@ -542,18 +544,18 @@ void transformareDinL100km( double valoareL100km)
 
 bool valid( char * p )
 {
-    for( int i=0; i<strlen(sep); i++)
+    for( unsigned int i=0; i<strlen(sep); i++)
         if(strchr(p,sep[i]))
         {
-            cout<<"Cerere invalida";
+            cout<<"Cerere invalida"<<endl;
             return false;
         }
     bool ok=false;
-    for( int i=0; i<strlen(nr); i++ )
+    for( unsigned int i=0; i<strlen(nr); i++ )
         if(strchr(p,nr[i]))
             ok=true;
     if(!ok)
-        cout<<"Cerere invalida";
+        cout<<"Cerere invalida"<<endl;
     return ok;
 }
 
@@ -635,12 +637,12 @@ void lungime()
     if( !*input.expresie )
     {
         if (input.unitInitial == input.unitFinal)
-            cout<<fixed<<input.valoareInitiala;
+            cout<<fixed<<input.valoareInitiala<<endl;
         else
         {
             double valoareMetrii = transformareInMetrii();
             transformareDinMetrii(valoareMetrii);
-            cout<<fixed<<input.valoareFinala;
+            cout<<fixed<<input.valoareFinala<<endl;
         }
     }
     else
@@ -652,7 +654,7 @@ void lungime()
         {
             getValoareInitiala(p);
             if(!getUnitateInitiala(p))
-                cout<<"Cerere invalida";
+                cout<<"Cerere invalida"<<endl;
             else
             {
                 valoareMetrii = transformareInMetrii();
@@ -661,7 +663,7 @@ void lungime()
                 getValoareInitiala(p);
                 
                 if(!getUnitateInitiala(p))
-                    cout<<"Cerere invalida";
+                    cout<<"Cerere invalida"<<endl;
                 else
                 {
                     if (op==1)
@@ -675,11 +677,11 @@ void lungime()
                     
                     
                     if(!getUnitateFinala(p))
-                        cout<<"Cerere invalida";
+                        cout<<"Cerere invalida"<<endl;
                     else
                     {
                         transformareDinMetrii(valoareMetrii);
-                        cout<<fixed<<input.valoareFinala;
+                        cout<<fixed<<input.valoareFinala<<endl;
                     }
                 }
             }
@@ -691,12 +693,12 @@ void arie()
     if( !*input.expresie )
     {
         if (input.unitInitial == input.unitFinal)
-            cout<<fixed<<input.valoareInitiala;
+            cout<<fixed<<input.valoareInitiala<<endl;
         else
         {
             double valoareMetrii2 = transformareInMetrii2();
             transformareDinMetrii2(valoareMetrii2);
-            cout<<fixed<<input.valoareFinala;
+            cout<<fixed<<input.valoareFinala<<endl;
         }
     }
     else
@@ -708,7 +710,7 @@ void arie()
         {
             getValoareInitiala(p);
             if(!getUnitateInitiala(p))
-                cout<<"Cerere invalida";
+                cout<<"Cerere invalida"<<endl;
             else
             {
                 valoareMetrii2 = transformareInMetrii2();
@@ -717,7 +719,7 @@ void arie()
                 getValoareInitiala(p);
                 
                 if(!getUnitateInitiala(p))
-                    cout<<"Cerere invalida";
+                    cout<<"Cerere invalida"<<endl;
                 else
                 {
                     if (op==1)
@@ -731,11 +733,11 @@ void arie()
                     
                     
                     if(!getUnitateFinala(p))
-                        cout<<"Cerere invalida";
+                        cout<<"Cerere invalida"<<endl;
                     else
                     {
                         transformareDinMetrii2(valoareMetrii2);
-                        cout<<fixed<<input.valoareFinala;
+                        cout<<fixed<<input.valoareFinala<<endl;
                     }
                 }
             }
@@ -747,12 +749,12 @@ void volum()
     if( !*input.expresie )
     {
         if (input.unitInitial == input.unitFinal)
-            cout<<fixed<<input.valoareInitiala;
+            cout<<fixed<<input.valoareInitiala<<endl;
         else
         {
             double valoareMetrii3 = transformareInMetrii3();
             transformareDinMetrii3(valoareMetrii3);
-            cout<<fixed<<input.valoareFinala;
+            cout<<fixed<<input.valoareFinala<<endl;
         }
     }
     else
@@ -764,7 +766,7 @@ void volum()
         {
             getValoareInitiala(p);
             if(!getUnitateInitiala(p))
-                cout<<"Cerere invalida";
+                cout<<"Cerere invalida"<<endl;
             else
             {
                 valoareMetrii3 = transformareInMetrii3();
@@ -773,7 +775,7 @@ void volum()
                 getValoareInitiala(p);
                 
                 if(!getUnitateInitiala(p))
-                    cout<<"Cerere invalida";
+                    cout<<"Cerere invalida"<<endl;
                 else
                 {
                     if (op==1)
@@ -787,11 +789,11 @@ void volum()
                     
                     
                     if(!getUnitateFinala(p))
-                        cout<<"Cerere invalida";
+                        cout<<"Cerere invalida"<<endl;
                     else
                     {
                         transformareDinMetrii3(valoareMetrii3);
-                        cout<<fixed<<input.valoareFinala;
+                        cout<<fixed<<input.valoareFinala<<endl;
                     }
                 }
             }
@@ -803,12 +805,12 @@ void timp()
     if( !*input.expresie )
     {
         if (input.unitInitial == input.unitFinal)
-            cout<<fixed<<input.valoareInitiala;
+            cout<<fixed<<input.valoareInitiala<<endl;
         else
         {
             double valoareSecunde=transformareInSecunde();
             transformareDinSecunde(valoareSecunde);
-            cout<<fixed<<input.valoareFinala;
+            cout<<fixed<<input.valoareFinala<<endl;
         }
     }
     else
@@ -820,7 +822,7 @@ void timp()
         {
             getValoareInitiala(p);
             if(!getUnitateInitiala(p))
-                cout<<"Cerere invalida";
+                cout<<"Cerere invalida"<<endl;
             else
             {
                 valoareSecunde = transformareInSecunde();
@@ -829,7 +831,7 @@ void timp()
                 getValoareInitiala(p);
                 
                 if(!getUnitateInitiala(p))
-                    cout<<"Cerere invalida";
+                    cout<<"Cerere invalida"<<endl;
                 else
                 {
                     if (op==1)
@@ -843,11 +845,11 @@ void timp()
                     
                     
                     if(!getUnitateFinala(p))
-                        cout<<"Cerere invalida";
+                        cout<<"Cerere invalida"<<endl;
                     else
                     {
                         transformareDinSecunde(valoareSecunde);
-                        cout<<fixed<<input.valoareFinala;
+                        cout<<fixed<<input.valoareFinala<<endl;
                     }
                 }
             }
@@ -859,12 +861,12 @@ void viteza()
     if( !*input.expresie )
     {
         if (input.unitInitial == input.unitFinal)
-            cout<<fixed<<input.valoareInitiala;
+            cout<<fixed<<input.valoareInitiala<<endl;
         else
         {
             double valoareMetriiSec=transformareInMetriiSec();
             transformareDinMetriiSec(valoareMetriiSec);
-            cout<<fixed<<input.valoareFinala;
+            cout<<fixed<<input.valoareFinala<<endl;
         }
     }
     else
@@ -876,7 +878,7 @@ void viteza()
         {
             getValoareInitiala(p);
             if(!getUnitateInitiala(p))
-                cout<<"Cerere invalida";
+                cout<<"Cerere invalida"<<endl;
             else
             {
                 valoareMetriiSec = transformareInMetriiSec();
@@ -885,7 +887,7 @@ void viteza()
                 getValoareInitiala(p);
                 
                 if(!getUnitateInitiala(p))
-                    cout<<"Cerere invalida";
+                    cout<<"Cerere invalida"<<endl;
                 else
                 {
                     if (op==1)
@@ -899,11 +901,11 @@ void viteza()
                     
                     
                     if(!getUnitateFinala(p))
-                        cout<<"Cerere invalida";
+                        cout<<"Cerere invalida"<<endl;
                     else
                     {
                         transformareDinMetriiSec(valoareMetriiSec);
-                        cout<<fixed<<input.valoareFinala;
+                        cout<<fixed<<input.valoareFinala<<endl;
                     }
                 }
             }
@@ -915,12 +917,12 @@ void temperatura()
     if( !*input.expresie )
     {
         if (input.unitInitial == input.unitFinal)
-            cout<<fixed<<input.valoareInitiala;
+            cout<<fixed<<input.valoareInitiala<<endl;
         else
         {
             double valoareC=transformareInC();
             transformareDinC(valoareC);
-            cout<<fixed<<input.valoareFinala;
+            cout<<fixed<<input.valoareFinala<<endl;
         }
     }
     else
@@ -932,7 +934,7 @@ void temperatura()
         {
             getValoareInitiala(p);
             if(!getUnitateInitiala(p))
-                cout<<"Cerere invalida";
+                cout<<"Cerere invalida"<<endl;
             else
             {
                 valoareC = transformareInC();
@@ -941,7 +943,7 @@ void temperatura()
                 getValoareInitiala(p);
                 
                 if(!getUnitateInitiala(p))
-                    cout<<"Cerere invalida";
+                    cout<<"Cerere invalida"<<endl;
                 else
                 {
                     if (op==1)
@@ -955,11 +957,11 @@ void temperatura()
                     
                     
                     if(!getUnitateFinala(p))
-                        cout<<"Cerere invalida";
+                        cout<<"Cerere invalida"<<endl;
                     else
                     {
                         transformareDinC(valoareC);
-                        cout<<fixed<<input.valoareFinala;
+                        cout<<fixed<<input.valoareFinala<<endl;
                     }
                 }
             }
@@ -971,12 +973,12 @@ void masa()
     if( !*input.expresie )
     {
         if (input.unitInitial == input.unitFinal)
-            cout<<fixed<<input.valoareInitiala;
+            cout<<fixed<<input.valoareInitiala<<endl;
         else
         {
             double valoareGrame=transformareInGrame();
             transformareDinGrame(valoareGrame);
-            cout<<fixed<<input.valoareFinala;
+            cout<<fixed<<input.valoareFinala<<endl;
         }
     }
     else
@@ -988,7 +990,7 @@ void masa()
         {
             getValoareInitiala(p);
             if(!getUnitateInitiala(p))
-                cout<<"Cerere invalida";
+                cout<<"Cerere invalida"<<endl;
             else
             {
                 valoareGrame = transformareInGrame();
@@ -997,7 +999,7 @@ void masa()
                 getValoareInitiala(p);
                 
                 if(!getUnitateInitiala(p))
-                    cout<<"Cerere invalida";
+                    cout<<"Cerere invalida"<<endl;
                 else
                 {
                     if (op==1)
@@ -1011,11 +1013,11 @@ void masa()
                     
                     
                     if(!getUnitateFinala(p))
-                        cout<<"Cerere invalida";
+                        cout<<"Cerere invalida"<<endl;
                     else
                     {
                         transformareDinGrame(valoareGrame);
-                        cout<<fixed<<input.valoareFinala;
+                        cout<<fixed<<input.valoareFinala<<endl;
                     }
                 }
             }
@@ -1032,12 +1034,12 @@ void energie()
             input.unitFinal = 1;
         
         if (input.unitInitial == input.unitFinal)
-            cout<<fixed<<input.valoareInitiala;
+            cout<<fixed<<input.valoareInitiala<<endl;
         else
         {
             double valoareJoule=transformareInJoule();
             transformareDinJoule(valoareJoule);
-            cout<<fixed<<input.valoareFinala;
+            cout<<fixed<<input.valoareFinala<<endl;
         }
     }
     else
@@ -1049,7 +1051,7 @@ void energie()
         {
             getValoareInitiala(p);
             if(!getUnitateInitiala(p))
-                cout<<"Cerere invalida";
+                cout<<"Cerere invalida"<<endl;
             else
             {
                 valoareJoule = transformareInJoule();
@@ -1058,7 +1060,7 @@ void energie()
                 getValoareInitiala(p);
                 
                 if(!getUnitateInitiala(p))
-                    cout<<"Cerere invalida";
+                    cout<<"Cerere invalida"<<endl;
                 else
                 {
                     if (op==1)
@@ -1072,11 +1074,11 @@ void energie()
                     
                     
                     if(!getUnitateFinala(p))
-                        cout<<"Cerere invalida";
+                        cout<<"Cerere invalida"<<endl;
                     else
                     {
                         transformareDinJoule(valoareJoule);
-                        cout<<fixed<<input.valoareFinala;
+                        cout<<fixed<<input.valoareFinala<<endl;
                     }
                 }
             }
@@ -1088,12 +1090,12 @@ void presiune()
     if( !*input.expresie )
     {
         if (input.unitInitial == input.unitFinal)
-            cout<<fixed<<input.valoareInitiala;
+            cout<<fixed<<input.valoareInitiala<<endl;
         else
         {
             double valoarePa=transformareInPa();
             transformareDinPa(valoarePa);
-            cout<<fixed<<input.valoareFinala;
+            cout<<fixed<<input.valoareFinala<<endl;
         }
     }
     else
@@ -1105,7 +1107,7 @@ void presiune()
         {
             getValoareInitiala(p);
             if(!getUnitateInitiala(p))
-                cout<<"Cerere invalida";
+                cout<<"Cerere invalida"<<endl;
             else
             {
                 valoarePa = transformareInPa();
@@ -1114,7 +1116,7 @@ void presiune()
                 getValoareInitiala(p);
                 
                 if(!getUnitateInitiala(p))
-                    cout<<"Cerere invalida";
+                    cout<<"Cerere invalida"<<endl;
                 else
                 {
                     if (op==1)
@@ -1128,11 +1130,11 @@ void presiune()
                     
                     
                     if(!getUnitateFinala(p))
-                        cout<<"Cerere invalida";
+                        cout<<"Cerere invalida"<<endl;
                     else
                     {
                         transformareDinPa(valoarePa);
-                        cout<<fixed<<input.valoareFinala;
+                        cout<<fixed<<input.valoareFinala<<endl;
                     }
                 }
             }
@@ -1144,12 +1146,12 @@ void densitate()
     if( !*input.expresie )
     {
         if (input.unitInitial == input.unitFinal)
-            cout<<fixed<<input.valoareInitiala;
+            cout<<fixed<<input.valoareInitiala<<endl;
         else
         {
             double valoareKmM3=transformareInKmM3();
             transformareDinKmM3(valoareKmM3);
-            cout<<fixed<<input.valoareFinala;
+            cout<<fixed<<input.valoareFinala<<endl;
         }
     }
     else
@@ -1161,7 +1163,7 @@ void densitate()
         {
             getValoareInitiala(p);
             if(!getUnitateInitiala(p))
-                cout<<"Cerere invalida";
+                cout<<"Cerere invalida"<<endl;
             else
             {
                 valoareKmM3 = transformareInKmM3();
@@ -1170,7 +1172,7 @@ void densitate()
                 getValoareInitiala(p);
                 
                 if(!getUnitateInitiala(p))
-                    cout<<"Cerere invalida";
+                    cout<<"Cerere invalida"<<endl;
                 else
                 {
                     if (op==1)
@@ -1184,11 +1186,11 @@ void densitate()
                     
                     
                     if(!getUnitateFinala(p))
-                        cout<<"Cerere invalida";
+                        cout<<"Cerere invalida"<<endl;
                     else
                     {
                         transformareDinKmM3(valoareKmM3);
-                        cout<<fixed<<input.valoareFinala;
+                        cout<<fixed<<input.valoareFinala<<endl;
                     }
                 }
             }
@@ -1200,12 +1202,12 @@ void consumCombustibil()
     if( !*input.expresie )
     {
         if (input.unitInitial == input.unitFinal)
-            cout<<fixed<<input.valoareInitiala;
+            cout<<fixed<<input.valoareInitiala<<endl;
         else
         {
             double valoareL100km=transformareInL100km();
             transformareDinL100km(valoareL100km);
-            cout<<fixed<<input.valoareFinala;
+            cout<<fixed<<input.valoareFinala<<endl;
         }
     }
     else
@@ -1217,7 +1219,7 @@ void consumCombustibil()
         {
             getValoareInitiala(p);
             if(!getUnitateInitiala(p))
-                cout<<"Cerere invalida";
+                cout<<"Cerere invalida"<<endl;
             else
             {
                 valoareL100km = transformareInL100km();
@@ -1226,7 +1228,7 @@ void consumCombustibil()
                 getValoareInitiala(p);
                 
                 if(!getUnitateInitiala(p))
-                    cout<<"Cerere invalida";
+                    cout<<"Cerere invalida"<<endl;
                 else
                 {
                     if (op==1)
@@ -1240,11 +1242,11 @@ void consumCombustibil()
                     
                     
                     if(!getUnitateFinala(p))
-                        cout<<"Cerere invalida";
+                        cout<<"Cerere invalida"<<endl;
                     else
                     {
                         transformareDinL100km(valoareL100km);
-                        cout<<fixed<<input.valoareFinala;
+                        cout<<fixed<<input.valoareFinala<<endl;
                     }
                 }
             }
@@ -1397,7 +1399,7 @@ void citire1()
     
     if (!verificareDateIntrare(input.unitInitial))
     {
-        cout<<"Cerere invalida";
+        cout<<"Cerere invalida"<<endl;
         ok = false;
     }
     else
@@ -1409,7 +1411,7 @@ void citire1()
         cin>>input.unitFinal;
         if (!verificareDateIntrare(input.unitFinal))
         {
-            cout<<"Cerere invalida";
+            cout<<"Cerere invalida"<<endl;
             ok = false;
         }
     }
@@ -1445,7 +1447,7 @@ bool citireUnitateMasura()
     cin>>input.unitMasura;
     if (input.unitMasura > 11 || input.unitMasura < 1)
     {
-        cout<<"Cerere invalida";
+        cout<<"Cerere invalida"<<endl;
         return false;
     }
     return true;
@@ -1460,7 +1462,7 @@ void interogare()
     cin>>raspuns;
     
     if (raspuns<1 || raspuns>2)
-        cout<< "Cerere invalida";
+        cout<< "Cerere invalida"<<endl;
     else
     if (citireUnitateMasura())
     {
@@ -1475,4 +1477,5 @@ void interogare()
 int main()
 {
     interogare();
+	return 0;
 }
