@@ -3,7 +3,7 @@ struct date
 	char expresie[256];
 	short unitInitial, unitFinal;
     int unitMasura;
-    double valoareInitiala, valoareFinala;
+    long double valoareInitiala, valoareFinala;
     
 }input;
 
